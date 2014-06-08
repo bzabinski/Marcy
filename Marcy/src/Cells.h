@@ -13,7 +13,7 @@
 struct Cells
 {
 	struct Neighborhoods neighborhood;
-
+	int name;
 	float velocity;
 	float pressure;
 };
