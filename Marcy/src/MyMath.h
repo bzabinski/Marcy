@@ -8,7 +8,7 @@
 #ifndef MYMATH_H_
 #define MYMATH_H_
 
-int trueMod(int a, int b)
+int trueMod(unsigned long long a, unsigned long long b)
 {
     int r = a % b;
     return r < 0 ? r + b : r;

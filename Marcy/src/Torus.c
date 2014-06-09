@@ -15,19 +15,20 @@
 
 int createTorus(int size)
 {
-	int length = (1 << size);
-	int uniqueCells = length * length;
+	unsigned long long length = (1 << size);
+	unsigned long long uniqueCells = length * length;
 
-	struct Cells *allTheCells[uniqueCells];		//This array will store the memloc to each cell
+	struct Cells **allTheCells = malloc(uniqueCells * sizeof(struct Cells));		//This array will store the memloc to each cell
 
 	//First allocate memory for each cell
-	for(int i = 0; i < uniqueCells; i++)
+	unsigned long long i = 0;
+	for(i = 0; i < uniqueCells; i++)
 	{
 		allTheCells[i] = malloc(sizeof(struct Cells));
 	}
 
 	//Now set the pointers to the correct cell
-	for(int i = 0; i < uniqueCells; i++)
+	for(i = 0; i < uniqueCells; i++)
 	{
 		/*			Size: 1, Length: 2, Unique: 4
 		 *
@@ -61,8 +62,7 @@ int createTorus(int size)
 		 *
 		 *
 		 */
-		int adjustVal = floor((double)i / (double)length) * length;
-		int test = trueMod((i - 1), length);
+		unsigned long long adjustVal = floor((double)i / (double)length) * length;
 		allTheCells[i]->neighborhood.midForwardCenter = allTheCells[trueMod((i - 1), length) + adjustVal];
 		allTheCells[i]->neighborhood.midForwardRight = allTheCells[trueMod(trueMod((i - 1), length) + adjustVal + length, uniqueCells)];	//Goes forward-center then back-right
 		allTheCells[i]->neighborhood.midBackRight = allTheCells[trueMod(i + length, uniqueCells)];
@@ -73,14 +73,19 @@ int createTorus(int size)
 
 
 	}
-	int a = 0;
-	printf("%d\n",allTheCells[a]->name);
-	printf("%d\n",allTheCells[a]->neighborhood.midForwardCenter->name);
-	printf("%d\n",allTheCells[a]->neighborhood.midForwardRight->name);
-	printf("%d\n",allTheCells[a]->neighborhood.midBackRight->name);
-	printf("%d\n",allTheCells[a]->neighborhood.midBackCenter->name);
-	printf("%d\n",allTheCells[a]->neighborhood.midBackLeft->name);
-	printf("%d\n",allTheCells[a]->neighborhood.midForwardLeft->name);
+
+	for(i = 0; i < uniqueCells; i++)
+	{
+		free(allTheCells[i]);
+	}
+	//int a = 0;
+	//printf("%d\n",allTheCells[a]->name);
+	//printf("%d\n",allTheCells[a]->neighborhood.midForwardCenter->name);
+	//printf("%d\n",allTheCells[a]->neighborhood.midForwardRight->name);
+	//printf("%d\n",allTheCells[a]->neighborhood.midBackRight->name);
+	//printf("%d\n",allTheCells[a]->neighborhood.midBackCenter->name);
+	//printf("%d\n",allTheCells[a]->neighborhood.midBackLeft->name);
+	//printf("%d\n",allTheCells[a]->neighborhood.midForwardLeft->name);
 
 	return 0;
 }
