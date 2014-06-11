@@ -12,5 +12,6 @@
 int test()
 {
 	something();
+	createNodes(2);
 	return 0;
 }

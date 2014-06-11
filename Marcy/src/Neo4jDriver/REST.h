@@ -9,5 +9,7 @@
 #define REST_H_
 
 int something();
+int createNodes(int numOfNodes);
+int createRelationships(int numOfNodes);
 
 #endif /* REST_H_ */
