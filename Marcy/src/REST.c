@@ -26,13 +26,16 @@ int something()
 
 		if(res != CURLE_OK)
 		{
+			puts("CURL not ok");
 			fprintf(stderr, "curl_easy_perform() failed %s\n", curl_easy_strerror(res));
 			return 1;
 		}
 		curl_easy_cleanup(curl);
+		puts("Good job");
 	}
 	else
 	{
+		puts("CURL init failed");
 		printf("init failed\n");
 		return 2;
 	}

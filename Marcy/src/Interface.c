@@ -9,9 +9,9 @@
 #include "JSON.h"
 #include "REST.h"
 
-int test()
+int initialize(int nodes)
 {
 	something();
-	createNodes(2);
+	//createNodes(nodes);
 	return 0;
 }

@@ -11,14 +11,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Config.h"
-#include "Torus.h"
-#include "Neo4jDriver/Interface.h"
+#include "include/Config.h"
+#include "include/Torus.h"
+#include "include/Interface.h"
 
 int main(void)
 {
 	createTorus(size);
-	test();
-	puts("Test"); /* prints !!!Hello World!!! */
+	initialize(size);
+	puts("Test"); 
 	return EXIT_SUCCESS;
 }
