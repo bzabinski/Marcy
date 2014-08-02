@@ -6,12 +6,14 @@
  */
 
 #include "Interface.h"
-#include "JSON.h"
 #include "REST.h"
 
 int initialize(int nodes)
 {
-	something();
-	//createNodes(nodes);
+	if(testServer() != 0)
+	{
+		return 1;
+	}
+	createNodes(nodes);
 	return 0;
 }

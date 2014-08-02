@@ -1,0 +1,37 @@
+src/REST.c: In function ‘createNodes’:
+src/REST.c:59:2: warning: implicit declaration of function ‘request’ [-Wimplicit-function-declaration]
+  text = request(url);
+  ^
+src/REST.c:59:7: warning: assignment makes pointer from integer without a cast [enabled by default]
+  text = request(url);
+       ^
+src/REST.c:53:9: warning: unused variable ‘i’ [-Wunused-variable]
+  size_t i;
+         ^
+src/REST.c: At top level:
+src/REST.c:101:14: error: conflicting types for ‘request’
+ static char *request(const char *url)
+              ^
+src/REST.c:59:9: note: previous implicit declaration of ‘request’ was here
+  text = request(url);
+         ^
+src/REST.c: In function ‘request’:
+src/REST.c:132:2: warning: passing argument 1 of ‘puts’ makes pointer from integer without a cast [enabled by default]
+  puts(code);
+  ^
+In file included from /usr/local/include/jansson.h:11:0,
+                 from src/REST.c:11:
+/usr/include/stdio.h:695:12: note: expected ‘const char *’ but argument is of type ‘long int’
+ extern int puts (const char *__s);
+            ^
+src/REST.c:104:11: warning: variable ‘status’ set but not used [-Wunused-but-set-variable]
+  CURLcode status;
+           ^
+src/REST.c: At top level:
+src/REST.c:70:12: warning: ‘newline_offset’ defined but not used [-Wunused-function]
+ static int newline_offset(const char *text)
+            ^
+src/REST.c:101:14: warning: ‘request’ defined but not used [-Wunused-function]
+ static char *request(const char *url)
+              ^
+make: *** [obj/REST.o] Error 1

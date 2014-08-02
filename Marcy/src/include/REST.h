@@ -8,8 +8,8 @@
 #ifndef REST_H_
 #define REST_H_
 
-int something();
 int createNodes(int numOfNodes);
-int createRelationships(int numOfNodes);
+
+static char *request(const char *url);
 
 #endif /* REST_H_ */

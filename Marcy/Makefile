@@ -11,13 +11,13 @@ LIBS = -lm -lcurl
 
 TARGET = Marcy
 
-_SRC = Marcy.c Torus.c Interface.c JSON.c REST.c
+_SRC = Marcy.c Torus.c Interface.c  REST.c
 SRC = $(patsubst %,$(SOURCEDIR)/%,$(_SRC))
 
-_DEPS = Cells.h  Config.h  Interface.h  JSON.h  MyMath.h  Neighborhoods.h  REST.h  Torus.h
+_DEPS = Cells.h  Config.h  Interface.h   MyMath.h  Neighborhoods.h  REST.h  Torus.h
 DEPS = $(patsubst %,$(INCLUDEDIR)/%,$(_DEPS))
 
-_OBJ =  Marcy.o Torus.o Interface.o JSON.o REST.o 
+_OBJ =  Marcy.o Torus.o Interface.o  REST.o 
 OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 default: $(BINDIR)/$(TARGET)
