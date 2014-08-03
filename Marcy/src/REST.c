@@ -8,10 +8,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <jansson.h>
 #include <curl/curl.h>
 
 #include "REST.h"
+#include "JSON.h"
 
 #define BUFFER_SIZE (256 * 1024)
 
@@ -60,8 +60,10 @@ int createNodes(int nodes)
 
 	text = request(url);
 	
-	puts(text);
-	free(text);
+	if(!text)
+		puts("Text didn't return anything");
+
+	parse(text);
 
 	return 0;
 }
@@ -122,10 +124,16 @@ static char *request(const char *url)
 
 	puts("About to set stuff");
 
+	char *postdata = sample();
+	//char *postdata = '{"query" : "MATCH (x {name: {startName}})-[r]-(friend) WHERE friend.name = {name} RETURN TYPE(r)", "params" : {"startName" : "I", "name" : "you"}}';
+	//puts(*postdata);
+	headers = curl_slist_append(headers, "Accept: application/json; charset=UTF-8");
+	headers = curl_slist_append(headers, "Content-Type: application/json");
+
 	curl_easy_setopt(curl, CURLOPT_URL, url);
 
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postdata);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_response);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_result);
 
