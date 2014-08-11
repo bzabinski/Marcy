@@ -9,7 +9,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "include/Config.h"
 #include "include/Torus.h"
@@ -17,8 +16,10 @@
 
 int main(void)
 {
-	createTorus(size);
-	initialize(size);
-	puts("Test"); 
-	return EXIT_SUCCESS;
+	//createTorus(size);
+	if(initialize(size) == 0)
+		puts("Pass"); 
+	else
+		puts("Fail");
+	return 0;
 }

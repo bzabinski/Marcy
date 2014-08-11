@@ -6,6 +6,7 @@
  */
 
 #include <jansson.h>
+#include <strings.h>
 
 #include "JSON.h"
 
@@ -38,8 +39,18 @@ int parse(char *text)
 	return 0;
 }
 
-char* sample(void)
+char* dropall(void)
 {
-	const struct json_t *temp = json_pack("{s:s, s:{s:s}}", "query", "CREATE (n:Person { name : {name} }) RETURN n", "params", "name", "Andres");
+	const struct json_t *temp = json_pack("{s:s}", "query", "MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r");
+	return json_dumps(temp, JSON_ENCODE_ANY);
+}
+
+char* formNode(int nodeNum)
+{
+	puts("Forming Node");
+	char* nodeStr;
+	sprintf(nodeStr, "%d", nodeNum);
+	puts(nodeStr);
+	const struct json_t *temp = json_pack("{s:s, s:{s:s}}", "query", "CREATE (a { name : {name} })", "params", "name", nodeStr);
 	return json_dumps(temp, JSON_ENCODE_ANY);
 }

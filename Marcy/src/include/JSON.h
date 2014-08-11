@@ -9,5 +9,9 @@
 #define JSON_H_
 
 int parse(char *text);
-char* sample();
+
+char *dropall(void);
+
+char *formNode(int nodeNum);
+
 #endif /* JSON_H_ */

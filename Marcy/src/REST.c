@@ -13,12 +13,15 @@
 #include "REST.h"
 #include "JSON.h"
 
-#define BUFFER_SIZE (256 * 1024)
+#define BUFFER_SIZE (1024 * 1024)
 
 #define CYPHER_URL	"http://localhost:7474/db/data/cypher"
 #define URL_SIZE	256
 
-int testServer()
+#define NO_RETURN 0
+#define RETURN 1
+
+int testServer(void)
 {
 	CURL *curl;
 	CURLcode res;
@@ -50,7 +53,6 @@ int testServer()
 
 int createNodes(int nodes)
 {
-	size_t i;
 	char *text;
 	char url[URL_SIZE];
 
@@ -58,12 +60,24 @@ int createNodes(int nodes)
 
 	puts(url);
 
-	text = request(url);
-	
-	if(!text)
-		puts("Text didn't return anything");
+	//Truncates the current DB
+	puts(dropall());
+	request(url, dropall(), NO_RETURN);
 
-	parse(text);
+	//Loops and adds each node to the DB
+	for(int i = 0; i < nodes; i++)
+	{
+		puts("About to create node");
+		request(url, formNode(i), NO_RETURN);
+		puts("About to free text");
+	}
+	puts("Out of loop");
+	//Create the relationships between the nodes
+
+	//if(!text)
+	//	puts("Text didn't return anything");
+
+	//parse(text);
 
 	return 0;
 }
@@ -102,7 +116,7 @@ static size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)
 	return size * nmemb;
 }
 
-static char *request(const char *url)
+static char *request(const char *url, char *postdata, int datareturn)
 {
 	CURL *curl = NULL;
 	CURLcode status;
@@ -124,7 +138,8 @@ static char *request(const char *url)
 
 	puts("About to set stuff");
 
-	char *postdata = sample();
+	//char *postdata = sample();
+	//char *postdata = dropall();
 	//char *postdata = '{"query" : "MATCH (x {name: {startName}})-[r]-(friend) WHERE friend.name = {name} RETURN TYPE(r)", "params" : {"startName" : "I", "name" : "you"}}';
 	//puts(*postdata);
 	headers = curl_slist_append(headers, "Accept: application/json; charset=UTF-8");
@@ -144,13 +159,11 @@ static char *request(const char *url)
 	puts("I performed it");
 
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &code);
-
+	
 	curl_easy_cleanup(curl);
 	curl_slist_free_all(headers);
 	curl_global_cleanup();
-
+	
 	data[write_result.pos] = '\0';
-
-	puts("All done?");
 	return data;
 }

@@ -8,6 +8,6 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-int test();
+int initialize(int size);
 
 #endif /* INTERFACE_H_ */
