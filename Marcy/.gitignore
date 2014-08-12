@@ -1,3 +1,6 @@
-!/*.o
-!/*~
-!/Marcy
+#No objects
+*.o
+#No temp files
+*~
+#No exec file
+Marcy
