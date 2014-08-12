@@ -51,7 +51,7 @@ int testServer(void)
 	return 0;
 }
 
-int createNodes(int nodes)
+int createNode(int node)
 {
 	char *text;
 	char url[URL_SIZE];
@@ -70,20 +70,22 @@ int createNodes(int nodes)
 		request(url, formNode(i), NO_RETURN);
 	}
 	puts("Created nodes");
+	return 0;
+}
 
+int createRelationship(int fromNode, int toNode, char* name)
 	//Loops and adds each relationship to each node
 	for(int i = 0; i < nodes; i++)
 	{
 		puts("About to create relationship");
-		puts(formRelationship(i, (i + 1) % 10, "Forward"));
-		text = request(url, formRelationship(i, (i + 1) % 10, "Forward"), RETURN);
+		text = request(url, formRelationship(fromNode, toNode, name), NO_RETURN);
 	}
 	puts("Relationships completed");
 
-	if(!text)
-		puts("Text didn't return anything");
+	//if(!text)
+	//	puts("Text didn't return anything");
 
-	parse(text);
+	//parse(text);
 
 	return 0;
 }

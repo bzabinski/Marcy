@@ -9,6 +9,6 @@
 #define CONFIG_H_
 
 float viscosity = 1.0;
-int size = 10;
+int size = 1;
 
 #endif /* CONFIG_H_ */

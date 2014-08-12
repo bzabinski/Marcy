@@ -10,6 +10,7 @@
 #include <math.h>
 
 #include "Torus.h"
+#include "Interface.h"
 #include "Cells.h"
 #include "MyMath.h"
 
@@ -18,7 +19,7 @@ int createTorus(int size)
 	unsigned long long length = (1 << size);
 	unsigned long long uniqueCells = length * length;
 
-	struct Cells **allTheCells = malloc(uniqueCells * sizeof(struct Cells));		//This array will store the memloc to each cell
+	//struct Cells **allTheCells = malloc(uniqueCells * sizeof(struct Cells));		//This array will store the memloc to each cell
 
 	//First allocate memory for each cell
 	unsigned long long i = 0;

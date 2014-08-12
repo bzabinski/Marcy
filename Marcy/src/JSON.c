@@ -55,10 +55,10 @@ char* formNode(int nodeNum)
 char* formRelationship(int startNode, int endNode, char* name)
 {
 	puts("Forming relationship");
-	//char* matchMerge = malloc(1024 * 256);
-	//sprintf(matchMerge, "MATCH (start: {start},(end: {end}) MERGE (start)-[:%s]->(end)", name);
-	//puts(matchMerge);
-	const struct json_t *temp = json_pack("{s:s, s:{s:i,s:i}}", "query", "MATCH (start { name: {start} }),(end { name: {end} }) MERGE (start)-[:Forward]->(end)", "params", "start", startNode, "end", endNode);
+	char* matchMerge = malloc(1024);
+	sprintf(matchMerge, "MATCH (start { name: {start} }),(end { name: {end} })    MERGE (start)-[:%s]->(end)", name);
+	puts(matchMerge);
+	const struct json_t *temp = json_pack("{s:s, s:{s:i,s:i}}", "query", matchMerge, "params", "start", startNode, "end", endNode);
 	//free(matchMerge);
 	return json_dumps(temp, JSON_COMPACT);
 }
