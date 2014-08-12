@@ -14,4 +14,6 @@ char *dropall(void);
 
 char *formNode(int nodeNum);
 
+char *formRelationship(int startNode, int endNode, char* name);
+
 #endif /* JSON_H_ */

@@ -61,7 +61,6 @@ int createNodes(int nodes)
 	puts(url);
 
 	//Truncates the current DB
-	puts(dropall());
 	request(url, dropall(), NO_RETURN);
 
 	//Loops and adds each node to the DB
@@ -69,15 +68,22 @@ int createNodes(int nodes)
 	{
 		puts("About to create node");
 		request(url, formNode(i), NO_RETURN);
-		puts("About to free text");
 	}
-	puts("Out of loop");
-	//Create the relationships between the nodes
+	puts("Created nodes");
 
-	//if(!text)
-	//	puts("Text didn't return anything");
+	//Loops and adds each relationship to each node
+	for(int i = 0; i < nodes; i++)
+	{
+		puts("About to create relationship");
+		puts(formRelationship(i, (i + 1) % 10, "Forward"));
+		text = request(url, formRelationship(i, (i + 1) % 10, "Forward"), RETURN);
+	}
+	puts("Relationships completed");
 
-	//parse(text);
+	if(!text)
+		puts("Text didn't return anything");
+
+	parse(text);
 
 	return 0;
 }
@@ -129,7 +135,8 @@ static char *request(const char *url, char *postdata, int datareturn)
 	
 	//skip error checking
 	
-	data = malloc(BUFFER_SIZE);
+	if(datareturn == RETURN)
+		data = malloc(BUFFER_SIZE);
 
 	struct write_result write_result = {
 		.data = data,
@@ -138,10 +145,6 @@ static char *request(const char *url, char *postdata, int datareturn)
 
 	puts("About to set stuff");
 
-	//char *postdata = sample();
-	//char *postdata = dropall();
-	//char *postdata = '{"query" : "MATCH (x {name: {startName}})-[r]-(friend) WHERE friend.name = {name} RETURN TYPE(r)", "params" : {"startName" : "I", "name" : "you"}}';
-	//puts(*postdata);
 	headers = curl_slist_append(headers, "Accept: application/json; charset=UTF-8");
 	headers = curl_slist_append(headers, "Content-Type: application/json");
 
@@ -149,8 +152,12 @@ static char *request(const char *url, char *postdata, int datareturn)
 
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postdata);
-	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_response);
-	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_result);
+
+	if(datareturn == RETURN)
+	{
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_response);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &write_result);
+	}
 
 	puts("About to perform");
 
@@ -164,6 +171,8 @@ static char *request(const char *url, char *postdata, int datareturn)
 	curl_slist_free_all(headers);
 	curl_global_cleanup();
 	
-	data[write_result.pos] = '\0';
+	if(datareturn == RETURN)
+		data[write_result.pos] = '\0';
+
 	return data;
 }

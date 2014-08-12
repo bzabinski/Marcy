@@ -42,15 +42,23 @@ int parse(char *text)
 char* dropall(void)
 {
 	const struct json_t *temp = json_pack("{s:s}", "query", "MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r");
-	return json_dumps(temp, JSON_ENCODE_ANY);
+	return json_dumps(temp, JSON_COMPACT);
 }
 
 char* formNode(int nodeNum)
 {
 	puts("Forming Node");
-	char* nodeStr;
-	sprintf(nodeStr, "%d", nodeNum);
-	puts(nodeStr);
-	const struct json_t *temp = json_pack("{s:s, s:{s:s}}", "query", "CREATE (a { name : {name} })", "params", "name", nodeStr);
-	return json_dumps(temp, JSON_ENCODE_ANY);
+	const struct json_t *temp = json_pack("{s:s, s:{s:i}}", "query", "CREATE (a { name : {name} })", "params", "name", nodeNum);
+	return json_dumps(temp, JSON_COMPACT);
+}
+
+char* formRelationship(int startNode, int endNode, char* name)
+{
+	puts("Forming relationship");
+	//char* matchMerge = malloc(1024 * 256);
+	//sprintf(matchMerge, "MATCH (start: {start},(end: {end}) MERGE (start)-[:%s]->(end)", name);
+	//puts(matchMerge);
+	const struct json_t *temp = json_pack("{s:s, s:{s:i,s:i}}", "query", "MATCH (start { name: {start} }),(end { name: {end} }) MERGE (start)-[:Forward]->(end)", "params", "start", startNode, "end", endNode);
+	//free(matchMerge);
+	return json_dumps(temp, JSON_COMPACT);
 }
