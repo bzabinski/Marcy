@@ -10,7 +10,9 @@
 
 int testServer(void);
 
-int createNodes(int numOfNodes);
+int createNode(int node);
+
+int createRelationship(int fromNode, int toNode, char* name);
 
 static char *request(const char *url, char *postdata, int datareturn);
 

@@ -10,4 +10,8 @@
 
 int initialize(int size);
 
+int makeNodes(int nodes);
+
+int makeRel(int nodeFrom, int nodeTo, char* name);
+
 #endif /* INTERFACE_H_ */

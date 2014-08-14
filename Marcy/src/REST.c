@@ -75,17 +75,10 @@ int createNode(int node)
 
 int createRelationship(int fromNode, int toNode, char* name)
 	//Loops and adds each relationship to each node
-	for(int i = 0; i < nodes; i++)
-	{
-		puts("About to create relationship");
-		text = request(url, formRelationship(fromNode, toNode, name), NO_RETURN);
-	}
+	
+	puts("About to create relationship");
+	request(url, formRelationship(fromNode, toNode, name), NO_RETURN);
 	puts("Relationships completed");
-
-	//if(!text)
-	//	puts("Text didn't return anything");
-
-	//parse(text);
 
 	return 0;
 }
