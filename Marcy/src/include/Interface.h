@@ -8,7 +8,7 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-int initialize(int size);
+int initialize(void);
 
 int makeNodes(int nodes);
 

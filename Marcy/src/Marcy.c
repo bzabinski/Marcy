@@ -17,9 +17,25 @@
 int main(void)
 {
 	//createTorus(size);
-	if(initialize(size) == 0)
-		puts("Pass"); 
+	if(initialize() == 0)
+    {
+		puts("Pass");
+    }
 	else
+    {
 		puts("Fail");
+        return 1;
+    }
+
+   if(createTorus(size) == 0)
+   {
+       puts("Torus created successfully");
+   }
+   else
+   {
+       puts("Torus creation failed");
+       return 1;
+   }
+
 	return 0;
 }

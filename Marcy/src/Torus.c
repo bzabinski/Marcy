@@ -19,14 +19,9 @@ int createTorus(int size)
 	unsigned long length = (1 << size);
 	unsigned long uniqueCells = length * length;
 
-	//struct Cells **allTheCells = malloc(uniqueCells * sizeof(struct Cells));		//This array will store the memloc to each cell
-
-	//First allocate memory for each cell
 	unsigned long i = 0;
-	for(i = 0; i < uniqueCells; i++)
-	{
-		allTheCells[i] = malloc(sizeof(struct Cells));
-	}
+	
+    makeNodes(uniqueCells);
 
 	//Now set the pointers to the correct cell
 	for(i = 0; i < uniqueCells; i++)
@@ -63,21 +58,13 @@ int createTorus(int size)
 		 *
 		 *
 		 */
-		unsigned long long adjustVal = floor((double)i / (double)length) * length;
-		allTheCells[i]->neighborhood.midForwardCenter = allTheCells[trueMod((i - 1), length) + adjustVal];
-		allTheCells[i]->neighborhood.midForwardRight = allTheCells[trueMod(trueMod((i - 1), length) + adjustVal + length, uniqueCells)];	//Goes forward-center then back-right
-		allTheCells[i]->neighborhood.midBackRight = allTheCells[trueMod(i + length, uniqueCells)];
-		allTheCells[i]->neighborhood.midBackCenter = allTheCells[trueMod((i + 1),length) + adjustVal];
-		allTheCells[i]->neighborhood.midBackLeft = allTheCells[trueMod(trueMod((i + 1),length) + adjustVal - length, uniqueCells)];			//Goes back-center then forward-left
-		allTheCells[i]->neighborhood.midForwardLeft = allTheCells[trueMod(i - length, uniqueCells)];
-		allTheCells[i]->name = i;
-
-
-	}
-
-	for(i = 0; i < uniqueCells; i++)
-	{
-		free(allTheCells[i]);
+		unsigned long adjustVal = floor((double)i / (double)length) * length;
+		makeRel(i, trueMod((i - 1), length) + adjustVal, "midForwardCenter") //= allTheCells[trueMod((i - 1), length) + adjustVal];
+		makeRel(i, trueMod(trueMod((i - 1), length) + adjustVal + length, uniqueCells), "midForwardRight"); //= allTheCells[trueMod(trueMod((i - 1), length) + adjustVal + length, uniqueCells)];	//Goes forward-center then back-right
+		makeRel(i, trueMod(i + length, uniqueCells), "midBackRight"); //= allTheCells[trueMod(i + length, uniqueCells)];
+		makeRel(i, trueMod(i + 1, length) + adjustVal, "midBackCenter"); //= allTheCells[trueMod((i + 1),length) + adjustVal];
+		makeRel(i, trueMod(trueMod(i + 1, length) + adjustVal - length, uniqueCells), "midBackLeft"); //= allTheCells[trueMod(trueMod((i + 1),length) + adjustVal - length, uniqueCells)];			//Goes back-center then forward-left
+		makeRel(i, trueMod(i - length, uniqueCells), "midForwardLeft"); //= allTheCells[trueMod(i - length, uniqueCells)];
 	}
 	//int a = 0;
 	//printf("%d\n",allTheCells[a]->name);
