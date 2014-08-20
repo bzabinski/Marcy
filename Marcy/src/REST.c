@@ -5,6 +5,7 @@
  *      Author: beth
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -64,18 +65,20 @@ int createNode(int node)
 	request(url, dropall(), NO_RETURN);
 
 	//Loops and adds each node to the DB
-	for(int i = 0; i < nodes; i++)
-	{
-		puts("About to create node");
-		request(url, formNode(i), NO_RETURN);
-	}
+	puts("About to create node");
+	request(url, formNode(node), NO_RETURN);
 	puts("Created nodes");
 	return 0;
 }
 
 int createRelationship(int fromNode, int toNode, char* name)
+{
 	//Loops and adds each relationship to each node
 	
+	char url[URL_SIZE];
+
+	snprintf(url, URL_SIZE, CYPHER_URL);
+
 	puts("About to create relationship");
 	request(url, formRelationship(fromNode, toNode, name), NO_RETURN);
 	puts("Relationships completed");

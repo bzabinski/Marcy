@@ -59,7 +59,7 @@ int createTorus(int size)
 		 *
 		 */
 		unsigned long adjustVal = floor((double)i / (double)length) * length;
-		makeRel(i, trueMod((i - 1), length) + adjustVal, "midForwardCenter") //= allTheCells[trueMod((i - 1), length) + adjustVal];
+		makeRel(i, trueMod((i - 1), length) + adjustVal, "midForwardCenter"); //= allTheCells[trueMod((i - 1), length) + adjustVal];
 		makeRel(i, trueMod(trueMod((i - 1), length) + adjustVal + length, uniqueCells), "midForwardRight"); //= allTheCells[trueMod(trueMod((i - 1), length) + adjustVal + length, uniqueCells)];	//Goes forward-center then back-right
 		makeRel(i, trueMod(i + length, uniqueCells), "midBackRight"); //= allTheCells[trueMod(i + length, uniqueCells)];
 		makeRel(i, trueMod(i + 1, length) + adjustVal, "midBackCenter"); //= allTheCells[trueMod((i + 1),length) + adjustVal];
